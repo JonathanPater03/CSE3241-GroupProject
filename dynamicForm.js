@@ -67,5 +67,3 @@ function updateAddButtonVisibility() {
         }
     });
 }
-
-// this is a sample comment
