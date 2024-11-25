@@ -14,6 +14,7 @@
                 $purDate = isset($_POST['purDate']) ? $_POST['purDate'] : [];
                 $sellDate = isset($_POST['sellDate']) ? $_POST['sellDate'] : [];
                 // This is a test to ensure the proper data is obtained from the index form submission
+                // test comment number 2
                 echo "<ul>";
                 foreach ($symbols as $sym) {
                     echo "<li>" . htmlspecialchars($sym) . "</li>";
