@@ -10,7 +10,10 @@
     <h1>Stock Purchasing and Selling</h1>
     <form class ="formStyle" action="stockProcessing.php" method="POST">
         <div class = "totalAmount">
-            <p>You have $2000.00 to Invest</p>
+            <label for="totalAmt">Enter Fixed Total Amount to Invest</label>
+            <input type="number" id="totalAmt" name="totalAmt" required>
+            <br>
+            <br>
         </div>
         <div class = "dynForm">
             <div class = "dynFormEntry">
