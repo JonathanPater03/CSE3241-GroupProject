@@ -8,7 +8,7 @@
     <body>
         <div>
             <?php
-                $conn = new mysqli('127.0.0.1', 'root', 'mysql', 'gp24');
+                $conn = new mysqli('127.0.0.1', 'root', 'mysql2024', 'gp24');
                 $amt_to_invest = $_POST['totalAmt'];
                 $symbols = isset($_POST['stockSymbol']) ? $_POST['stockSymbol'] : [];
                 $amounts = isset($_POST['partialAmt']) ? $_POST['partialAmt'] : [];
@@ -52,26 +52,33 @@
                     <tr>
                         <th>Stock Symbol</th>
                         <th>Purchase Date</th>
-                        <th>Purchase Price</th>
+                        <th>Amount Invested</th>
+                        <th>Stock Price at Purchase</th>
+                        <th>Shares</th>
                         <th>Sell Date</th>
-                        <th>Sell Price</th>
+                        <th>Stock Price at Sell</th>
                     </tr>";
+                $totalGain = 0;
                 foreach ($symbols as $index => $symbol) {
                     $purchasePrice = getPrice($conn, $symbol, $purDate);
                     $sellPrice = getPrice($conn, $symbol, $sellDate);
+                    $shares = $amounts[$index] / $purchasePrice;
+                    $amtInvested = $amounts[$index];
                     echo "<tr>
                             <td>$symbol</td>
                             <td>$purDate</td>
-                            <td>$purchasePrice</td>
+                            <td>$$amtInvested</td>
+                            <td>$$purchasePrice</td>
+                            <td>".number_format($shares, 2) ."</td>
                             <td>$sellDate</td>
-                            <td>$sellPrice</td>
+                            <td>$$sellPrice</td>
                         </tr>";
                     if ($purchasePrice === null || $sellPrice === null) {
                         die("Error: Stock data not found for $symbol.");
                     }
-
-                    $gain = (($sellPrice - $purchasePrice) * $amounts[$index] / $amt_to_invest) * 0.99; // 1% broker fee
-                    $gain = $gain * 0.80; //20% tax
+                    $gain = ((($sellPrice * $shares)) - $amtInvested) * 0.99; // 1% broker fee
+                    $gain = $gain * 0.80; // 20% tax
+                    $totalGain = $totalGain + $gain;
                     $results[] = "Stock: $symbol, Gain/Loss: $" . number_format($gain, 2);
                 }
                 echo "</table>";
@@ -85,6 +92,7 @@
                 foreach ($results as $result) {
                     echo "<tr><td>$result</td></tr>";
                 }
+                echo "<tr><td>Total Gain: $".number_format($totalGain, 2)."</td></tr>";
                 echo "</table>";
 
                 $conn->close();
