@@ -8,7 +8,7 @@
     <body>
         <div>
             <?php
-                $conn = new mysqli('127.0.0.1', 'root', 'mysql2024', 'gp24');
+                $conn = new mysqli('127.0.0.1', 'root', 'mysql', 'gp24');
                 $amt_to_invest = $_POST['totalAmt'];
                 $symbols = isset($_POST['stockSymbol']) ? $_POST['stockSymbol'] : [];
                 $amounts = isset($_POST['partialAmt']) ? $_POST['partialAmt'] : [];
