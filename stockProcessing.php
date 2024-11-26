@@ -90,7 +90,7 @@
                 echo "<h1>Transaction Results</h1>";
                 echo "<table>
                     <tr>
-                        <th>Result</th>
+                        <th>Result After 1% Broker Fee and 20% Tax</th>
                     </tr>";
                 foreach ($results as $result) {
                     echo "<tr><td>$result</td></tr>";
