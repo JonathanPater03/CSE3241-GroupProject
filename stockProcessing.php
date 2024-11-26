@@ -13,40 +13,60 @@
                 $amounts = isset($_POST['partialAmt']) ? $_POST['partialAmt'] : [];
                 $purDate = isset($_POST['purDate']) ? $_POST['purDate'] : [];
                 $sellDate = isset($_POST['sellDate']) ? $_POST['sellDate'] : [];
-                // This is a test to ensure the proper data is obtained from the index form submission
-                // echo "<ul>";
-                // foreach ($symbols as $sym) {
-                //    echo "<li>" . htmlspecialchars($sym) . "</li>";
-                // }
-                // echo "</ul>";
-                // echo "<ul>";
-                // foreach ($amounts as $amt) {
-                //    echo "<li>" . htmlspecialchars($amt) . "</li>";
-                //}
-                // echo "</ul>";
-                // echo "<p>".$purDate."</p>";
-                // echo "<p>".$sellDate."</p>";
-                //END OF TESTING OUTPUTS
-                /**
-                 * TO DO:
-                 * 1. Set up your mySQL with Ryan's DB
-                 * 2. Connect to DB and figure out SQL to properly query for data
-                 * 3. Check if the sum of the elements of $amounts is equal to $amt_to_invest, raise error if not equal
-                 * 4. Query to check if $purDate and $sellDate are in the DB
-                 *    a. if $purDate is a weekend date, default to soonest "open market" date
-                 *    b. if $sellDate is a weekend date, default to that friday before
-                 * 5. Check to make sure the purchase and sell date are at least one day apart
-                 *    a. if not, raise an error message
-                 * 6. Write query into DB and get results
-                 * 7. Take results and factor in the 1% broker fee and 20% tax
-                 * 8. Compare results with original purchasing value to calculate a loss or gain
-                 * 9. Print loss or gain
-                 */
-            ?>
-        </div>
-        <form action="index.php", method="POST">
-            <label for="return">Press RETURN to go back </label>
-            <button type="submit">RETURN</button>
-        </form>
-    </body>
+                // Validate Total Investment
+if (array_sum($amounts) != $amt_to_invest) {
+    die("Error: Total amounts do not match the amount to invest.");
+}
+
+// Adjust Dates for Weekends
+function adjustToWeekday($date) {
+    $day = date('N', strtotime($date));
+    if ($day >= 6) {
+        return date('Y-m-d', strtotime('last Friday', strtotime($date)));
+    }
+    return $date;
+}
+$purDate = adjustToWeekday($purDate);
+$sellDate = adjustToWeekday($sellDate);
+
+// Validate Dates
+if ($sellDate <= $purDate) {
+    die("Error: Sell date must be after purchase date.");
+}
+
+// Fetch Stock Price
+function getPrice($conn, $symbol, $date) {
+    $query = $conn->prepare("SELECT price FROM stock_prices WHERE symbol = ? AND date = ?");
+    $query->bind_param("ss", $symbol, $date);
+    $query->execute();
+    $query->bind_result($price);
+    $query->fetch();
+    $query->close();
+    return $price;
+}
+// samople command
+// Calculate Gains/Losses
+$results = [];
+foreach ($symbols as $index => $symbol) {
+    $purchasePrice = getPrice($conn, $symbol, $purDate);
+    $sellPrice = getPrice($conn, $symbol, $sellDate);
+
+    if ($purchasePrice === null || $sellPrice === null) {
+        die("Error: Stock data not found for $symbol.");
+    }
+
+    $gain = (($sellPrice - $purchasePrice) * $amounts[$index] / $amt_to_invest) * 0.79; // 1% broker fee, 20% tax
+    $results[] = "Stock: $symbol, Gain/Loss: $" . number_format($gain, 2);
+}
+
+// Output Results
+echo "<h1>Transaction Results</h1>";
+echo "<ul>";
+foreach ($results as $result) {
+    echo "<li>$result</li>";
+}
+echo "</ul>";
+
+$conn->close();
+?>
 </html>
