@@ -8,7 +8,7 @@ The database accepts data from [Investing.com](https://www.investing.com), using
 
 ```sql
 
-LOAD DATA INFILE 'DOWNLOADED CSV HERE'
+LOAD DATA LOCAL INFILE 'DOWNLOADED CSV HERE'
 INTO TABLE VALS
 FIELDS terminated by ','
 ENCLOSED by '"'
@@ -25,7 +25,7 @@ SET date = STR_TO_DATE(@date, '%m/%d/%Y'),
 
 Download the Zip File and unzip into the directory of your choosing
 ```sh
-tar -xf file.zip
+tar -xf groupProj.zip
 ```
 
 Log into mySQL and set local_infile=1.
