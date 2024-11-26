@@ -57,6 +57,7 @@
                         <th>Shares</th>
                         <th>Sell Date</th>
                         <th>Stock Price at Sell</th>
+                        <th>Value of Shares at Sell</th>
                     </tr>";
                 $totalGain = 0;
                 foreach ($symbols as $index => $symbol) {
@@ -64,6 +65,7 @@
                     $sellPrice = getPrice($conn, $symbol, $sellDate);
                     $shares = $amounts[$index] / $purchasePrice;
                     $amtInvested = $amounts[$index];
+                    $valueAtSell = (($sellPrice * $shares));
                     echo "<tr>
                             <td>$symbol</td>
                             <td>$purDate</td>
@@ -72,11 +74,12 @@
                             <td>".number_format($shares, 2) ."</td>
                             <td>$sellDate</td>
                             <td>$$sellPrice</td>
+                            <td>$".number_format($valueAtSell, 2)."</td>
                         </tr>";
                     if ($purchasePrice === null || $sellPrice === null) {
                         die("Error: Stock data not found for $symbol.");
                     }
-                    $gain = ((($sellPrice * $shares)) - $amtInvested) * 0.99; // 1% broker fee
+                    $gain = ($valueAtSell - $amtInvested) * 0.99; // 1% broker fee
                     $gain = $gain * 0.80; // 20% tax
                     $totalGain = $totalGain + $gain;
                     $results[] = "Stock: $symbol, Gain/Loss: $" . number_format($gain, 2);

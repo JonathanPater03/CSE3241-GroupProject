@@ -1,6 +1,6 @@
-create schema gp24;
+create schema gp24TestDB;
 
-use gp24;
+use gp24TestDB;
 
 Create table if not exists VALS (
     Date date not null,
