@@ -33,7 +33,7 @@ Log into mySQL and set local_infile=1.
 mysql -u root -p --local-infile=1
 ```
 
-In mySQL, run the following commands
+In mySQL, run the following commands to get test data into mySQL
 ```sql
 SOURCE GP24.sql;
 SOURCE testdata.sql;
