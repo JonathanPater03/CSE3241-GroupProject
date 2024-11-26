@@ -27,3 +27,31 @@ h1 {
 input{
     background-color: white;
 }
+
+table {
+    width: 60%;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    color: black;
+}
+
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    color: white;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+.returnButton {
+    display: flex;
+    justify-content: center;
+}

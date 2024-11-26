@@ -11,7 +11,7 @@
     <form class ="formStyle" action="stockProcessing.php" method="POST">
         <div class = "totalAmount">
             <label for="totalAmt">Enter Fixed Total Amount to Invest</label>
-            <input type="number" id="totalAmt" name="totalAmt" required>
+            <input type="number" id="totalAmt" name="totalAmt" step="0.01" required>
             <br>
             <br>
         </div>
@@ -21,7 +21,7 @@
                 <input type="text" id="stockSymbol" name="stockSymbol[]" required>
                 <br>
                 <label for="partialAmt">Amount to Invest in This Stock</label>
-                <input type="number" id="partialAmt" name="partialAmt[]" required>
+                <input type="number" id="partialAmt" name="partialAmt[]" step="0.01" required>
                 <button type="button" id="addStock" onclick="addStockForm()">+</button>
         
             </div>

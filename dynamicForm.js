@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <input type="text" id="stockSymbol" name="stockSymbol[]" required>
             <br>
             <label for="partialAmt">Amount to Invest in This Stock</label>
-            <input type="number" id="partialAmt" name="partialAmt[]" required>
+            <input type="number" id="partialAmt" name="partialAmt[]" step="0.01" required>
         `;
         if (stockEntries.length > 0) {
             const removeButton = document.createElement('button');
