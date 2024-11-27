@@ -28,7 +28,7 @@ Download the Zip File and unzip into the directory of your choosing
 tar -xf groupProj.zip
 ```
 
-Log into mySQL and set local_infile=1.
+Log into mySQL and set local_infile=1. Ensure you are logging into mySQL with the same directory that the project is in
 ```sh
 mysql -u root -p --local-infile=1
 ```
