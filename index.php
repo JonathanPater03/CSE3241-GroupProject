@@ -10,7 +10,7 @@
     <h1>Stock Purchasing and Selling</h1>
     <div>
         <?php
-          $conn = new mysqli('127.0.0.1', 'root', 'mysql2024', 'gp24');
+          $conn = new mysqli('127.0.0.1', 'root', 'mysql', 'gp24');
           $sql = "select distinct stock from vals;";
           $result = mysqli_query($conn, $sql);
           if (!$result) {
