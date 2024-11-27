@@ -8,7 +8,7 @@
     <body>
         <div>
             <?php
-                $conn = new mysqli('127.0.0.1', 'root', 'mysql', 'gp24');
+                $conn = new mysqli('127.0.0.1', 'root', 'mysql2024', 'gp24');
                 $amt_to_invest = $_POST['totalAmt'];
                 $symbols = isset($_POST['stockSymbol']) ? $_POST['stockSymbol'] : [];
                 $amounts = isset($_POST['partialAmt']) ? $_POST['partialAmt'] : [];
@@ -16,6 +16,9 @@
                 $sellDate = $_POST['sellDate'];
                 // Validate Total Investment
                 if (array_sum($amounts) != $amt_to_invest) {
+                    echo "<form class=\"returnButton\" action=\"index.php\", method=\"POST\">
+                            <button type=\"submit\">RETURN</button>
+                         </form>";
                     die("Error: Total amounts do not match the amount to invest.");
                 }
 
@@ -32,6 +35,9 @@
 
                 // Validate Dates
                 if ($sellDate <= $purDate) {
+                    echo "<form class=\"returnButton\" action=\"index.php\", method=\"POST\">
+                        <button type=\"submit\">RETURN</button>
+                    </form>";
                     die("Error: Sell date must be after purchase date.");
                 }
 
@@ -77,6 +83,9 @@
                             <td>$".number_format($valueAtSell, 2)."</td>
                         </tr>";
                     if ($purchasePrice === null || $sellPrice === null) {
+                        echo "<form class=\"returnButton\" action=\"index.php\", method=\"POST\">
+                        <button type=\"submit\">RETURN</button>
+                        </form>";
                         die("Error: Stock data not found for $symbol.");
                     }
                     $gain = ($valueAtSell - $amtInvested) * 0.99; // 1% broker fee

@@ -8,6 +8,24 @@
   </head>
   <body>
     <h1>Stock Purchasing and Selling</h1>
+    <div>
+        <?php
+          $conn = new mysqli('127.0.0.1', 'root', 'mysql2024', 'gp24');
+          $sql = "select distinct stock from vals;";
+          $result = mysqli_query($conn, $sql);
+          if (!$result) {
+            die("Query for stocks failed: ".mysqli_error($conn));
+          }
+          else{
+            echo "<h3>Available Stocks to Purchase</h3>";
+            echo "<ul>";
+            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+              echo "<li>- ".$row['stock']."</li><br>";
+            }
+            echo "</ul>";
+          }
+        ?>
+    </div>
     <form class ="formStyle" action="stockProcessing.php" method="POST">
         <div class = "totalAmount">
             <label for="totalAmt">Enter Fixed Total Amount to Invest</label>
