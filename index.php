@@ -24,6 +24,8 @@
             }
             echo "</ul>";
           }
+          mysqli_free_result($result);
+          mysqli_close($conn);
         ?>
     </div>
     <form class ="formStyle" action="stockProcessing.php" method="POST">
