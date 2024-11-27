@@ -39,7 +39,7 @@ SOURCE GP24.sql;
 SOURCE testdata.sql;
 exit;
 ```
-In the command line, ensure apachectl is working
+If you are working on a Mac Device, in the command line, ensure apachectl is working
 ```sh
 apachectl start
 ```
