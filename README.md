@@ -45,7 +45,7 @@ apachectl start
 ```
 Run the PHP project
 ```sh
-php -S localhost:8000/index.php
+php -S localhost:8000
 ```
 After this, the program should load on your web browser use the link 
 http://localhost:8000/index.php to run the home page
